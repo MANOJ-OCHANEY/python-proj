@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}">
+		{% block head %}{% endblock %}
+		<title>Family Expenditure Planner</title>
+	</head>
+	<body>
+		<div class="header">
+			<span>Family Expenditure Planner</span>
+			{% block buttons %}{% endblock %}
+		</div>
+		<div class="content">
+			{% block content %}{% endblock %}
+		</div>
+		<div class="footer">
+			<span>Made by Muskan, Mohit and Manoj</span>
+		</div>
+	</body>
+</html>

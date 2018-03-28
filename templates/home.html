@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block head %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+{% endblock %}
+
+{% block buttons %}
+	<button onclick="document.getElementById('id02').style.display='block'" id="sin" class="signs">Sign In</button>
+	<button onclick="document.getElementById('id01').style.display='block'" id="sup" class="signs">Sign Up</button>
+{% endblock %}
+
+{% block content %}
+	<div class="section">
+		<h2>Step 1 : Sign In / Sign Up</h2>
+		<hr>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati voluptatibus sequi ad officiis doloribus suscipit consequuntur deleniti, corrupti consequatur pariatur omnis eos impedit ducimus mollitia quaerat eligendi, hic soluta minus.</p>
+	</div>
+	<div class="section">
+		<h2>Step 2 : Something</h2>
+		<hr>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati voluptatibus sequi ad officiis doloribus suscipit consequuntur deleniti, corrupti consequatur pariatur omnis eos impedit ducimus mollitia quaerat eligendi, hic soluta minus.</p>
+	</div>
+	<div class="section">
+		<h2>Step 3 : Something Else</h2>
+		<hr>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati voluptatibus sequi ad officiis doloribus suscipit consequuntur deleniti, corrupti consequatur pariatur omnis eos impedit ducimus mollitia quaerat eligendi, hic soluta minus.</p>
+	</div>
+	<div id="id01" class="modal">
+		<form class="modal-content animate" action="/action_page.php">
+			<div class="container">
+				<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+				<h1>Sign Up</h1>
+				<p>Please fill in this form to create an account.</p>
+				<hr>
+				<label for="email"><b>Email</b></label>
+				<input type="text" placeholder="Enter Email" name="email" required>
+				<label for="psw"><b>Password</b></label>
+				<input type="password" placeholder="Enter Password" name="psw" required>
+				<label for="psw-repeat"><b>Repeat Password</b></label>
+				<input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+				<button type="submit" class="signupbtn">Sign Up</button>
+			</div>
+		</form>
+	</div>
+	<div id="id02" class="modal">
+		<form class="modal-content animate" action="/action_page.php">
+			<div class="container">
+				<span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+				<h1>Sign In</h1>
+				<hr>
+				<label for="uname"><b>Username</b></label>
+				<input type="text" placeholder="Enter Username" name="uname" required>
+				<label for="psw"><b>Password</b></label>
+				<input type="password" placeholder="Enter Password" name="psw" required>
+				<button type="submit">Sign In</button>
+			</div>
+		</form>
+	</div>
+{% endblock %}
