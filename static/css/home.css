@@ -7,21 +7,27 @@
 	color: rgb(18, 119, 124)
 }
 
+.signs {
+    width: 80px;
+    height: 30px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: rgba(118, 168, 242,0.7);
+    border: 2px solid rgba(118, 168, 242,0.7);
+    border-radius: 5px;
+    color: white;
+}
+
 .header .signs {
 	position: absolute;
 	top: 50%;
 	transform: translate(0,-50%);
 	width: 80px;
 	height: 80%;
-	transition-duration: 0.4s;
-    cursor: pointer;
-    background-color: rgba(118, 168, 242,0.7);
-    border: 2px solid rgba(118, 168, 242,0.7);
     border-radius: 10px;
-    color: white;
 }
 
-.header .signs:hover {
+.signs:hover {
 	background-color: #fff;
 	color: black;
 }
@@ -63,7 +69,7 @@ input[type=text], input[type=password] {
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
-    background-color: #474e5d;
+    background-color: rgba(71, 78, 93,0.8);
     padding-top: 50px;
 }
 
