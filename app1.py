@@ -16,7 +16,7 @@ def signin():
 	if(user.getuser(username,password)):
 		return 'Welcome '
 	else:
-		return 'User not registered'
+		return 'Invalid username or password'
 
 
 @app.route('/signup',methods=['POST'])
