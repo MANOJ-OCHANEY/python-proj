@@ -1,50 +1,60 @@
-.header span {
+* {
+	box-sizing: border-box;
+	margin: 0;
+}
+
+html {
+	height: 100%;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+	/*background-color: rgba(118, 168, 242,0.1);*/
+	height: 100%;
+}
+
+header {
+	height: 100%;
+	background-image: url("/static/img/sample2.jpg");
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+	background-size: cover;
+}
+
+.col {
+	display: inline-block;
+	height: 100%;
+	margin: 7px;
+	position: relative;
+}
+
+.col1 {
+	width: 49%;
+	float: left;
+}
+
+.col2 {
+	width: 48%;
+}
+
+.headings,.form-con {
 	position: absolute;
 	top: 50%;
-	transform: translate(0,-50%);
-	font-size: 36px;
-	left: 20px;
-	color: rgb(18, 119, 124)
+	left: 50%;
+	transform: translate(-50%,-50%);
+	/*font-family: Josefin Slab,Arial, Helvetica, sans-serif*/
 }
 
-.signs {
-    width: 80px;
-    height: 30px;
-    transition-duration: 0.4s;
-    cursor: pointer;
-    background-color: rgba(118, 168, 242,0.7);
-    border: 2px solid rgba(118, 168, 242,0.7);
-    border-radius: 5px;
-    color: white;
+.headings h1 {
+	font-family: Lora,Arial,sans-serif;
+	font-style: bold;
+	font-size: 60px;
 }
 
-.header .signs {
-	position: absolute;
-	top: 50%;
-	transform: translate(0,-50%);
-	width: 80px;
-	height: 80%;
-    border-radius: 10px;
-}
-
-.signs:hover {
-	background-color: #fff;
-	color: black;
-}
-
-#sin {
-	right: 100px;
-}
-
-#sup {
-	right: 10px;
-}
-
-.section {
-	border: 1px solid rgba(118, 168, 242,0.7);
-	background-color: rgba(118, 168, 242,0.1);
-	margin: 10px 5px;
-	padding: 10px;
+.headings h3 {
+	font-family: Lora,Arial,sans-serif;
+	font-style: italic;
+	font-size: 20px;
 }
 
 input[type=text], input[type=password] {
@@ -55,8 +65,81 @@ input[type=text], input[type=password] {
     border: 1px solid #ccc;
 }
 
-.container {
+.form-con,.form-con1 {
     padding: 16px;
+    background-color: rgba(229, 231, 234,0.5);
+    border: 2px solid rgba(229, 231, 234,1);
+    border-radius: 20px;
+}
+
+.form-con1 {
+	margin: 5% auto 15% auto;
+	width: 30%;
+}
+
+.form-main > * {
+	margin: 8px 0;
+}
+
+.signs {
+    width: 100%;
+    height: 30px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    background-color: black;
+    border: 2px solid rgba(118, 168, 242,0.7);
+    border-radius: 5px;
+    color: white;
+}
+
+.signs:hover {
+	background-color: #fff;
+	color: black;
+}
+
+.container {
+	clear: both;
+	width: 100%;
+	/*background-color: rgba(118, 168, 242,0.1);*/
+}
+
+.content {
+	width: 90%;
+	margin: 20px auto;
+}
+
+#step1,#step3,#step4 {
+	float: left;
+}
+
+#step2,#step4 {
+	float: right;
+}
+
+section {
+	width: 50%;
+	height: 200px;
+	display: inline-block;
+	background-color: rgba(229, 231, 234,0.3);
+    border: 2px solid rgba(229, 231, 234,1);
+    border-radius: 10px;
+	margin: 10px;
+}
+
+section > * {
+	margin: 10px;
+}
+
+.clr {
+	clear: both;
+}
+
+footer {
+	margin-top: 20px;
+	border-top: 3px black solid;
+	padding: 10px;
+	text-align: center;
+	font-size: 25px;
 }
 
 /* The Modal (background) */
@@ -83,15 +166,9 @@ input[type=text], input[type=password] {
 
 /* Add Zoom Animation */
 .animate {
-    -webkit-animation: animatezoom 0.6s;
     animation: animatezoom 0.6s
 }
 
-@-webkit-keyframes animatezoom {
-    from {-webkit-transform: scale(0)} 
-    to {-webkit-transform: scale(1)}
-}
-    
 @keyframes animatezoom {
     from {transform: scale(0)} 
     to {transform: scale(1)}
@@ -109,7 +186,7 @@ input[type=text], input[type=password] {
 }
 
 .close:hover,
-.close:focus {
+.close:focus,.sin:hover {
     color: red;
     cursor: pointer;
 }

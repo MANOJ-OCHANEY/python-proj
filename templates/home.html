@@ -1,61 +1,99 @@
-{% extends 'base.html' %}
-
-{% block head %}
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-{% endblock %}
-
-{% block buttons %}
-	<button onclick="document.getElementById('id02').style.display='block'" id="sin" class="signs">Sign In</button>
-	<button onclick="document.getElementById('id01').style.display='block'" id="sup" class="signs">Sign Up</button>
-{% endblock %}
-
-{% block content %}
-	<div class="section">
-		<h2>Step 1 : Sign In / Sign Up</h2>
-		<hr>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati voluptatibus sequi ad officiis doloribus suscipit consequuntur deleniti, corrupti consequatur pariatur omnis eos impedit ducimus mollitia quaerat eligendi, hic soluta minus.</p>
-	</div>
-	<div class="section">
-		<h2>Step 2 : Something</h2>
-		<hr>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati voluptatibus sequi ad officiis doloribus suscipit consequuntur deleniti, corrupti consequatur pariatur omnis eos impedit ducimus mollitia quaerat eligendi, hic soluta minus.</p>
-	</div>
-	<div class="section">
-		<h2>Step 3 : Something Else</h2>
-		<hr>
-		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Obcaecati voluptatibus sequi ad officiis doloribus suscipit consequuntur deleniti, corrupti consequatur pariatur omnis eos impedit ducimus mollitia quaerat eligendi, hic soluta minus.</p>
-	</div>
-	<div id="id01" class="modal">
-		<form class="modal-content animate" action="/signup" method="post">
-			<div class="container">
-				<span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
-				<h1>Sign Up</h1>
-				<p>Please fill in this form to create an account.</p>
-				<hr>
-				<label for="name"><b>Name</b></label>
-				<input type="text" placeholder="Enter Name" name="name" required>
-				<label for="email"><b>Email</b></label>
-				<input type="text" placeholder="Enter Email" name="email" required>
-				<label for="username"><b>Username</b></label>
-				<input type="text" placeholder="Enter Username" name="username" required>
-				<label for="psw"><b>Password</b></label>
-				<input type="password" placeholder="Enter Password" name="psw" required>
-				<button type="submit" class="signs">Sign Up</button>
+<!DOCTYPE html>
+<html>
+	<head>
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/home.css') }}">
+		<link href="https://fonts.googleapis.com/css?family=Lora:400i,700" rel="stylesheet">
+		<style>
+	      [data-sr] {
+	        visibility: hidden;
+	      }
+    	</style>
+	</head>
+	<body>
+		<header>
+			<div class="col1 col">
+				<div class="headings">
+					<h1 data-sr="wait 0.5s,enter bottom, ease-in-out 30px">Family Expenditure Planner</h1>
+					<h3 data-sr="wait 1s,enter bottom ease-in-out 40px">It's not your salary that makes you rich, it's your spending habits.</h3>
+				</div>
 			</div>
-		</form>
-	</div>
-	<div id="id02" class="modal">
-		<form class="modal-content animate" action="/signin" method="post">
-			<div class="container">
-				<span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
-				<h1>Sign In</h1>
-				<hr>
-				<label for="username"><b>Username</b></label>
-				<input type="text" placeholder="Enter Username" name="username" required>
-				<label for="psw"><b>Password</b></label>
-				<input type="password" placeholder="Enter Password" name="psw" required>
-				<button type="submit" class="signs">Sign In</button>
+			<div class="col2 col">
+				<div class="form-con">
+					<form class="form-main" action="/signup" method="post">
+						<h1>Sign Up</h1>
+						<p>Please fill in this form to create an account.</p>
+						<hr>
+						<label for="name"><b>Name</b></label>
+						<input type="text" placeholder="Enter Name" name="name" required>
+						<label for="email"><b>Email</b></label>
+						<input type="text" placeholder="Enter Email" name="email" required>
+						<label for="username"><b>Username</b></label>
+						<input type="text" placeholder="Enter Username" name="username" required>
+						<label for="psw"><b>Password</b></label>
+						<input type="password" placeholder="Enter Password" name="psw" required>
+						<button type="submit" class="signs">Sign Up</button>
+						<p style="text-align: center;">Already have an account <span class="sin" onclick="document.getElementById('id02').style.display='block'"><b>Sign in</b></span></p>
+					</form>
+				</div>
 			</div>
-		</form>
-	</div>
-{% endblock %}
+			<div id="id02" class="modal">
+				<div class="form-con1 animate">
+					<form class="form-main" action="/signin" method="post">
+						<span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+						<h1>Sign In</h1>
+						<hr>
+						<label for="username"><b>Username</b></label>
+						<input type="text" placeholder="Enter Username" name="username" required>
+						<label for="psw"><b>Password</b></label>
+						<input type="password" placeholder="Enter Password" name="psw" required>
+						<button type="submit" class="signs">Sign In</button>
+					</form>
+				</div>
+			</div>
+		</header>
+		<div class="container">
+			<div class="content">
+				<section id="step1" data-sr="wait 0.6s and then enter left ease-in-out 50px">
+					<h1>Step 1</h1>
+					<hr>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit maxime adipisci praesentium omnis dolores illum quibusdam architecto similique id officiis optio commodi soluta, reiciendis repudiandae odio, ut magni debitis sed.</p>
+				</section>
+				<div class="clr"></div>
+				<section id="step2" data-sr="wait 0.6s and then enter right ease-in-out 50px">
+					<h1>Step 2</h1>
+					<hr>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cum, voluptas dolorum eos sapiente quisquam voluptatem corporis nemo facilis obcaecati, sed repellat eaque, consectetur nostrum. Obcaecati voluptatum necessitatibus eligendi quae cumque.</p>
+				</section>
+				<div class="clr"></div>
+				<section id="step3" data-sr="wait 0.6s and then enter left ease-in-out 50px">
+					<h1>Step 3</h1>
+					<hr>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod blanditiis facere laborum cupiditate earum, maiores cumque veritatis possimus voluptates veniam alias nemo tempora iure, reprehenderit suscipit deserunt id dolore? Quis.</p>
+				</section>
+				<div class="clr"></div>
+				<section id="step4" data-sr="wait 0.6s and then enter right ease-in-out 50px">
+					<h1>Step 4</h1>
+					<hr>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores est numquam nemo accusantium laborum quod tempore voluptas cum error eveniet id dolore consequatur debitis eaque voluptatibus, aut quisquam architecto reprehenderit.</p>
+				</section>
+				<div class="clr"></div>
+				<section id="step5" data-sr="wait 0.6s and then enter left ease-in-out 50px">
+					<h1>Step 5</h1>
+					<hr>
+					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis eius maxime delectus, deserunt neque modi. Et iure harum quae! Repellat assumenda quas porro ea incidunt officiis voluptas, impedit facilis itaque.</p>
+				</section>
+				<div class="clr"></div>
+			</div>
+		</div>
+		<footer>
+			<span>Made By Manoj, Mohit and Muskan</span>
+		</footer>
+	</body>
+
+	<script src="{{ url_for('static', filename='js/scrollReveal.min.js') }}"></script>
+    <script>
+    	window.sr = new scrollReveal();
+    </script>
+
+</html>
