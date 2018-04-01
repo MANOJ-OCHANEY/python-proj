@@ -70,6 +70,8 @@ input[type=text], input[type=password] {
     background-color: rgba(229, 231, 234,0.5);
     border: 2px solid rgba(229, 231, 234,1);
     border-radius: 20px;
+    font-family: Poppins,Arial, Helvetica, sans-serif;
+    font-style: medium;
 }
 
 .form-con1 {
@@ -118,7 +120,7 @@ input[type=text], input[type=password] {
 
 section {
 	width: 50%;
-	height: 200px;
+	min-height: 200px;
 	display: inline-block;
 	background-color: rgba(229, 231, 234,0.3);
     border: 2px solid rgba(229, 231, 234,1);
