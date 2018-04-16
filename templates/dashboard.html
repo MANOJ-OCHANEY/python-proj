@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Family Expenditure Planner</title>
+
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+	<link href="https://fonts.googleapis.com/css?family=Lora:400i,700" rel="stylesheet">
+</head>
+<body>
+	<header>
+		<span id="heading">Family Expenditure Planner</span>
+		<span id="greet">Welcome, {{ name }}</span>
+		<button type="button" class="btn btn-outline-dark btn-lg signs" onclick="location.href='/signout'">Sign Out</button>
+	</header>
+
+	<div class="add-income">
+		<span>Add Income Details &rArr;</span>
+		<div class="bttn">
+			<!-- <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Salary">
+				Salary
+			</button>
+			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Refunds">
+				Refunds
+			</button>
+			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Business">
+				Business
+			</button>
+			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Pension">
+				Pension
+			</button>
+			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Bonus">
+				Bonus
+			</button>
+			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Other">
+				Other
+			</button> -->
+			{% for i in incdata %}
+			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="{{ i[0] }}">
+				{{ i[0] }}
+			</button>
+			{% endfor %}
+		</div>
+	</div>
+	<hr style="border: 0;height: 2px;background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);margin: 0">
+	<div class="add-expense">
+		<span>&lArr; Add Expense Details</span>
+		<div class="bttn">
+			<!-- <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Savings">
+				Savings
+			</button>
+			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Home">
+				Home
+			</button>
+			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Transportation">
+				Transportation
+			</button>
+			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Health">
+				Health
+			</button>
+			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Daily-living">
+				Daily living
+			</button>
+			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Entertainment">
+				Entertainment
+			</button> -->
+			{% for i in expdata %}
+			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="{{ i }}">
+				{{ i }}
+			</button>
+			{% endfor %}
+		</div>
+	</div>
+	<hr style="border: 0;height: 2px;background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);margin: 0">
+
+	<div class="table-income">
+		<span>Income</span>
+		<div>
+			<table class="table table-bordered">
+				<thead class="thead-light">
+					<tr>
+						<th width="150">Income</th>
+						{% for j in months %}
+						<th>{{ j }}</th>
+						{% endfor %}
+					</tr>
+				</thead>
+				<tbody>
+					{% for i in incdata %}
+					<tr>
+						<th>{{ i[0] }}</th>
+						{% for j in range(1,13) %}
+						<td>{{ i[j] }}</td>
+						{% endfor %}
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+	<div class="table-expense">
+		<span>Expenses</span>
+		{% for i in expdata %}
+		<div>
+			<table class="table table-bordered table-sm">
+				<thead class="thead-light">
+					<tr>
+						<th width="150">{{ i }}</th>
+						{% for j in months %}
+						<th>{{ j }}</th>
+						{% endfor %}
+					</tr>
+				</thead>
+				<tbody>
+					{% for j in expdata[i] %}
+					<tr>
+						<th>{{ j[0] }}</th>
+						{% for k in range(1,13) %}
+						<td>{{ j[k] }}</td>
+						{% endfor %}
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		{% endfor %}
+	</div>
+
+	<div class="yearly-chart">
+		<canvas id="myChart"></canvas>
+	</div>
+
+	<footer>
+		<span>Made By Manoj, Mohit and Muskan</span>
+	</footer>
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  	<div class="modal-dialog" role="document">
+	    	<div class="modal-content">
+		      	<form action="" method="post" id="main-form" autocomplete="off">
+		      		<div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel"></h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				        	<span aria-hidden="true">&times;</span>
+				        </button>
+				    </div>
+				    <div class="modal-body">
+				    	<div class="form-group name-of-expense">
+				    		<label for="expense"><b>Name of Expense</b></label>
+							<!-- <select class="form-control savings exp" name="expense" required>
+								<option value="Investments">Investments</option>
+								<option value="Retirement">Retirement</option>
+								<option value="Education">Education</option>
+								<option value="Other">Other</option>
+		    				</select>
+		    				<select class="form-control home exp" name="expense" required>
+								<option value="Rent">Rent</option>
+								<option value="Electricity">Electricity</option>
+								<option value="Gas">Gas</option>
+								<option value="Water">Water</option>
+								<option value="Phone">Phone</option>
+								<option value="Internet">Internet</option>
+								<option value="Maintenance">Maintenance</option>
+								<option value="Other">Other</option>
+		    				</select>
+		    				<select class="form-control transportation exp" name="expense" required>
+								<option value="Railway">Railway</option>
+								<option value="Auto">Auto</option>
+								<option value="Fuel">Fuel</option>
+								<option value="Other">Other</option>
+		    				</select>
+		    				<select class="form-control health exp" name="expense" required>
+								<option value="Insurance">Insurance</option>
+								<option value="Medicines">Medicines</option>
+								<option value="Doctor">Doctor</option>
+								<option value="Other">Other</option>
+		    				</select>
+		    				<select class="form-control daily-living exp" name="expense" required>
+								<option value="Groceries">Groceries</option>
+								<option value="Cleaning">Cleaning</option>
+								<option value="Clothes">Clothes</option>
+								<option value="Salon">Salon</option>
+								<option value="Child-care">Child care</option>
+								<option value="Dining-out">Dining out</option>
+								<option value="Other">Other</option>
+		    				</select>
+		    				<select class="form-control entertainment exp" name="expense" required>
+								<option value="Movies">Movies</option>
+								<option value="Concerts">Concerts</option>
+								<option value="Sports">Sports</option>
+								<option value="Outdoor">Outdoor</option>
+								<option value="Other">Other</option>
+		    				</select> -->
+		    				<!-- {% for i in expdata %}
+		    				<select class="form-control {{ i.lower() }} exp" name="expense" required>
+		    					{% for j in expdata[i] %}
+		    					<option value="{{ j[0] }}">{{ j[0] }}</option>
+		    					{% endfor %}
+		    				</select>
+		    				{% endfor %} -->
+		    				<select class="form-control" name="expense" required>
+		    					<option hidden selected>Choose</option>
+		    				{% for i in expdata %}
+		    					{% for j in expdata[i] %}
+		    					<option class= "{{ i.lower() }} exp" value="{{ j[0] }}">{{ j[0] }}</option>
+		    					{% endfor %}
+		    				{% endfor %}
+		    				</select>
+				    	</div>
+				    	<div class="form-group">
+							<label for="price"><b>Amount</b></label>
+							<input type="number" min="0" class="form-control" placeholder="Enter Price" name="price" required>
+				    	</div>
+				    	<div class="form-group">
+				    		<label for="month"><b>Month</b></label>
+							<select class="form-control" name="month" required>
+								<!-- <option value="January">January</option>
+								<option value="February">February</option>
+								<option value="March">March</option>
+								<option value="April">April</option>
+								<option value="May">May</option>
+								<option value="June">June</option>
+								<option value="July">July</option>
+								<option value="August">August</option>
+								<option value="September">September</option>
+								<option value="October">October</option>
+								<option value="November">November</option>
+								<option value="December">December</option> -->
+								{% for j in months %}
+								<option value="{{ j }}">{{ j }}</option>
+								{% endfor %}
+		    				</select>
+				    	</div>
+		      		</div>
+		      		<div class="modal-footer">
+						<button type="submit" class="btn btn-primary mb-2">ADD</button>
+		      		</div>
+				</form>
+	    	</div>
+	  	</div>
+	</div>
+
+	<script src="{{ url_for('static', filename='js/jquery-3.3.1.slim.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+	<script>
+		var ctx = document.getElementById("myChart");
+		var myChart = new Chart(ctx, {
+		    type: 'bar',
+		    data: {
+		        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+		        datasets: [{
+		            label: '# of Votes',
+		            data: [12, 19, 3, 5, 2, 3],
+		            backgroundColor: [
+		                'rgba(255, 99, 132, 0.2)',
+		                'rgba(54, 162, 235, 0.2)',
+		                'rgba(255, 206, 86, 0.2)',
+		                'rgba(75, 192, 192, 0.2)',
+		                'rgba(153, 102, 255, 0.2)',
+		                'rgba(255, 159, 64, 0.2)'
+		            ],
+		            borderColor: [
+		                'rgba(255,99,132,1)',
+		                'rgba(54, 162, 235, 1)',
+		                'rgba(255, 206, 86, 1)',
+		                'rgba(75, 192, 192, 1)',
+		                'rgba(153, 102, 255, 1)',
+		                'rgba(255, 159, 64, 1)'
+		            ],
+		            borderWidth: 1
+		        },{
+		            label: '# of Votes',
+		            data: [12, 19, 3, 5, 2, 3],
+		            backgroundColor: [
+		                'rgba(255, 99, 132, 0.2)',
+		                'rgba(54, 162, 235, 0.2)',
+		                'rgba(255, 206, 86, 0.2)',
+		                'rgba(75, 192, 192, 0.2)',
+		                'rgba(153, 102, 255, 0.2)',
+		                'rgba(255, 159, 64, 0.2)'
+		            ],
+		            borderColor: [
+		                'rgba(255,99,132,1)',
+		                'rgba(54, 162, 235, 1)',
+		                'rgba(255, 206, 86, 1)',
+		                'rgba(75, 192, 192, 1)',
+		                'rgba(153, 102, 255, 1)',
+		                'rgba(255, 159, 64, 1)'
+		            ],
+		            borderWidth: 1
+		        },{
+		            label: '# of Votes',
+		            data: [12, 19, 3, 5, 2, 3],
+		            backgroundColor: [
+		                'rgba(255, 99, 132, 0.2)',
+		                'rgba(54, 162, 235, 0.2)',
+		                'rgba(255, 206, 86, 0.2)',
+		                'rgba(75, 192, 192, 0.2)',
+		                'rgba(153, 102, 255, 0.2)',
+		                'rgba(255, 159, 64, 0.2)'
+		            ],
+		            borderColor: [
+		                'rgba(255,99,132,1)',
+		                'rgba(54, 162, 235, 1)',
+		                'rgba(255, 206, 86, 1)',
+		                'rgba(75, 192, 192, 1)',
+		                'rgba(153, 102, 255, 1)',
+		                'rgba(255, 159, 64, 1)'
+		            ],
+		            borderWidth: 1
+		        },{
+		            label: '# of Votes',
+		            data: [12, 19, 3, 5, 2, 3],
+		            backgroundColor: [
+		                'rgba(255, 99, 132, 0.2)',
+		                'rgba(54, 162, 235, 0.2)',
+		                'rgba(255, 206, 86, 0.2)',
+		                'rgba(75, 192, 192, 0.2)',
+		                'rgba(153, 102, 255, 0.2)',
+		                'rgba(255, 159, 64, 0.2)'
+		            ],
+		            borderColor: [
+		                'rgba(255,99,132,1)',
+		                'rgba(54, 162, 235, 1)',
+		                'rgba(255, 206, 86, 1)',
+		                'rgba(75, 192, 192, 1)',
+		                'rgba(153, 102, 255, 1)',
+		                'rgba(255, 159, 64, 1)'
+		            ],
+		            borderWidth: 1
+		        },{
+		            label: '# of Votes',
+		            data: [12, 19, 3, 5, 2, 3],
+		            backgroundColor: [
+		                'rgba(255, 99, 132, 0.2)',
+		                'rgba(54, 162, 235, 0.2)',
+		                'rgba(255, 206, 86, 0.2)',
+		                'rgba(75, 192, 192, 0.2)',
+		                'rgba(153, 102, 255, 0.2)',
+		                'rgba(255, 159, 64, 0.2)'
+		            ],
+		            borderColor: [
+		                'rgba(255,99,132,1)',
+		                'rgba(54, 162, 235, 1)',
+		                'rgba(255, 206, 86, 1)',
+		                'rgba(75, 192, 192, 1)',
+		                'rgba(153, 102, 255, 1)',
+		                'rgba(255, 159, 64, 1)'
+		            ],
+		            borderWidth: 1
+		        },{
+		            label: '# of Votes',
+		            data: [12, 19, 3, 5, 2, 3],
+		            backgroundColor: [
+		                'rgba(255, 99, 132, 0.2)',
+		                'rgba(54, 162, 235, 0.2)',
+		                'rgba(255, 206, 86, 0.2)',
+		                'rgba(75, 192, 192, 0.2)',
+		                'rgba(153, 102, 255, 0.2)',
+		                'rgba(255, 159, 64, 0.2)'
+		            ],
+		            borderColor: [
+		                'rgba(255,99,132,1)',
+		                'rgba(54, 162, 235, 1)',
+		                'rgba(255, 206, 86, 1)',
+		                'rgba(75, 192, 192, 1)',
+		                'rgba(153, 102, 255, 1)',
+		                'rgba(255, 159, 64, 1)'
+		            ],
+		            borderWidth: 1
+		        }]
+		    },
+		    options: {
+		        scales: {
+		            yAxes: [{
+		                ticks: {
+		                    beginAtZero:true
+		                }
+		            }]
+		        }
+		    }
+		});
+	</script>
+</body>
+</html>

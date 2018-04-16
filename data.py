@@ -41,7 +41,49 @@ def addExpense(uname,category,type_,month,amt):
     cell.value = amt
     wb.save('data.xlsx')
 
-#addExpense('manoj.o','Savings','Saving','May',5000)
+def table_income_data(uname):
+    ws = wb[uname]
+    rows = ws.rows
+    rows = list(rows)
+    incdata = []
+    for row in rows:
+        if row[1].value=='Income':
+            temp = []
+            temp.append(row[0].value)
+            for i in range(2,14):
+                temp.append(row[i].value)
+            incdata.append(temp)
+
+    return incdata
+
+def table_expense_data(uname):
+    ws = wb[uname]
+    rows = ws.rows
+    rows = list(rows)
+    expdata = {
+        'Savings':[],
+        'Home':[],
+        'Transportation':[],
+        'Health':[],
+        'Daily-living':[],
+        'Entertainment':[] }
+    for row in rows:
+        if row[1].value in expdata:
+            temp = []
+            temp.append(row[0].value)
+            for i in range(2,14):
+                temp.append(row[i].value)
+            expdata[row[1].value].append(temp)
+
+    return expdata
+
+def get_months():
+    m = []
+    for i in months:
+        m.append(i)
+    return m
+
+#addExpense('manoj.o','Savings','Other','May',5000)
 #print('Expense added')
 
 
