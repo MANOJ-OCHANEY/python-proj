@@ -18,24 +18,6 @@
 	<div class="add-income">
 		<span>Add Income Details &rArr;</span>
 		<div class="bttn">
-			<!-- <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Salary">
-				Salary
-			</button>
-			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Refunds">
-				Refunds
-			</button>
-			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Business">
-				Business
-			</button>
-			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Pension">
-				Pension
-			</button>
-			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Bonus">
-				Bonus
-			</button>
-			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Other">
-				Other
-			</button> -->
 			{% for i in incdata %}
 			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="{{ i[0] }}">
 				{{ i[0] }}
@@ -47,24 +29,6 @@
 	<div class="add-expense">
 		<span>&lArr; Add Expense Details</span>
 		<div class="bttn">
-			<!-- <button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Savings">
-				Savings
-			</button>
-			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Home">
-				Home
-			</button>
-			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Transportation">
-				Transportation
-			</button>
-			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Health">
-				Health
-			</button>
-			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Daily-living">
-				Daily living
-			</button>
-			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="Entertainment">
-				Entertainment
-			</button> -->
 			{% for i in expdata %}
 			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="{{ i }}">
 				{{ i }}
@@ -150,57 +114,6 @@
 				    <div class="modal-body">
 				    	<div class="form-group name-of-expense">
 				    		<label for="expense"><b>Name of Expense</b></label>
-							<!-- <select class="form-control savings exp" name="expense" required>
-								<option value="Investments">Investments</option>
-								<option value="Retirement">Retirement</option>
-								<option value="Education">Education</option>
-								<option value="Other">Other</option>
-		    				</select>
-		    				<select class="form-control home exp" name="expense" required>
-								<option value="Rent">Rent</option>
-								<option value="Electricity">Electricity</option>
-								<option value="Gas">Gas</option>
-								<option value="Water">Water</option>
-								<option value="Phone">Phone</option>
-								<option value="Internet">Internet</option>
-								<option value="Maintenance">Maintenance</option>
-								<option value="Other">Other</option>
-		    				</select>
-		    				<select class="form-control transportation exp" name="expense" required>
-								<option value="Railway">Railway</option>
-								<option value="Auto">Auto</option>
-								<option value="Fuel">Fuel</option>
-								<option value="Other">Other</option>
-		    				</select>
-		    				<select class="form-control health exp" name="expense" required>
-								<option value="Insurance">Insurance</option>
-								<option value="Medicines">Medicines</option>
-								<option value="Doctor">Doctor</option>
-								<option value="Other">Other</option>
-		    				</select>
-		    				<select class="form-control daily-living exp" name="expense" required>
-								<option value="Groceries">Groceries</option>
-								<option value="Cleaning">Cleaning</option>
-								<option value="Clothes">Clothes</option>
-								<option value="Salon">Salon</option>
-								<option value="Child-care">Child care</option>
-								<option value="Dining-out">Dining out</option>
-								<option value="Other">Other</option>
-		    				</select>
-		    				<select class="form-control entertainment exp" name="expense" required>
-								<option value="Movies">Movies</option>
-								<option value="Concerts">Concerts</option>
-								<option value="Sports">Sports</option>
-								<option value="Outdoor">Outdoor</option>
-								<option value="Other">Other</option>
-		    				</select> -->
-		    				<!-- {% for i in expdata %}
-		    				<select class="form-control {{ i.lower() }} exp" name="expense" required>
-		    					{% for j in expdata[i] %}
-		    					<option value="{{ j[0] }}">{{ j[0] }}</option>
-		    					{% endfor %}
-		    				</select>
-		    				{% endfor %} -->
 		    				<select class="form-control" name="expense" required>
 		    					<option hidden selected>Choose</option>
 		    				{% for i in expdata %}
@@ -217,18 +130,6 @@
 				    	<div class="form-group">
 				    		<label for="month"><b>Month</b></label>
 							<select class="form-control" name="month" required>
-								<!-- <option value="January">January</option>
-								<option value="February">February</option>
-								<option value="March">March</option>
-								<option value="April">April</option>
-								<option value="May">May</option>
-								<option value="June">June</option>
-								<option value="July">July</option>
-								<option value="August">August</option>
-								<option value="September">September</option>
-								<option value="October">October</option>
-								<option value="November">November</option>
-								<option value="December">December</option> -->
 								{% for j in months %}
 								<option value="{{ j }}">{{ j }}</option>
 								{% endfor %}
