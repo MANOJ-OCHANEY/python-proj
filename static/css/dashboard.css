@@ -114,13 +114,52 @@ header {
 	text-align: center;
 }
 
+#bcollapse {
+	text-align: center;	
+}
+
+#bcollapse a {
+	/*width: 16%;*/
+	margin: 0 5px;
+}
+
 .yearly-chart {
-	margin: 20px auto;
-	width: 80%;
-	padding: 10px;
+	margin: 20px auto 0;
+	width: 95%;
+	/*padding: 10px;*/
 	background-color: rgba(250,250,250,0.7);
 }
 
+.average-chart {
+	/*margin: 20px 0;
+	margin-left: 5%;*/
+	/*width: 50%;*/
+	/*padding: 0px;*/
+	background-color: rgba(250,250,250,0.7);
+	margin-right: 10px;
+	/*display: inline-block;*/
+}
+
+.analysis {
+	/*margin: 20px 0;
+	margin-right: 5%;*/
+	/*width: 50%;*/
+	padding: 10px;
+	background-color: rgba(250,250,250,0.7);
+	margin-left: 10px;
+	/*display: inline-block;*/
+}
+
+.avg {
+	font-size: 20px;
+	float: left;
+}
+
+.amt {
+	font-size: 20px;
+	text-align: right;
+	float: right;
+}
 
 footer {
 	/*margin-top: 20px;*/

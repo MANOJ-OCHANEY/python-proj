@@ -19,9 +19,11 @@
 		<span>Add Income Details &rArr;</span>
 		<div class="bttn">
 			{% for i in incdata %}
-			<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="{{ i[0] }}">
-				{{ i[0] }}
-			</button>
+				{% if i[0]!='Total' %}
+				<button type="button" class="btn btn-dark" data-toggle="modal" data-target="#exampleModal" data-whatever="{{ i[0] }}">
+					{{ i[0] }}
+				</button>
+				{% endif %}
 			{% endfor %}
 		</div>
 	</div>
@@ -55,7 +57,11 @@
 					<tr>
 						<th>{{ i[0] }}</th>
 						{% for j in range(1,13) %}
-						<td>{{ i[j] }}</td>
+							{% if i[0]=='Total' %}
+							<td><b>{{ i[j] }}</b></td>
+							{% else %}
+							<td>{{ i[j] }}</td>
+							{% endif %}
 						{% endfor %}
 					</tr>
 					{% endfor %}
@@ -64,10 +70,18 @@
 		</div>
 	</div>
 
-	<div class="table-expense">
+	<div class="table-expense" id="texp">
 		<span>Expenses</span>
+		<div id="bcollapse">
 		{% for i in expdata %}
-		<div>
+		<button type="button" class="btn btn-dark" data-toggle="collapse" data-target="#{{ i.lower() }}" aria-controls="{{ i.lower() }}">
+			{{ i }}
+		</button>
+		{% endfor %}
+		</div>
+		<br>
+		{% for i in expdata %}
+		<div class="collapse" id="{{ i.lower() }}" data-parent="#texp">
 			<table class="table table-bordered table-sm">
 				<thead class="thead-light">
 					<tr>
@@ -82,7 +96,11 @@
 					<tr>
 						<th>{{ j[0] }}</th>
 						{% for k in range(1,13) %}
-						<td>{{ j[k] }}</td>
+							{% if j[0]=='Total' %}
+							<td><b>{{ j[k] }}</b></td>
+							{% else %}
+							<td>{{ j[k] }}</td>
+							{% endif %}
 						{% endfor %}
 					</tr>
 					{% endfor %}
@@ -93,7 +111,47 @@
 	</div>
 
 	<div class="yearly-chart">
-		<canvas id="myChart"></canvas>
+		<canvas id="barChart"></canvas>
+	</div>
+
+	<div class="row" style="width: 95%;margin: 20px auto;">
+		<div class="col-8" style="padding: 0">
+			<div class="average-chart">
+				<canvas id="pieChart"></canvas>
+			</div>
+		</div>
+		<div class="col-4" style="padding: 0">
+			<div class="analysis">
+				<h1 style="margin: 0;text-align: center;">Analysis</h1>
+				<hr style="border: 0;height: 2px;background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);margin: 0">
+				<div>
+					<br>
+					<div>
+						<span class="avg">Avg. monthly income</span>
+						<span class="amt">₹{{ finalamt[0] }}</span>
+					</div>
+					<div style="clear: both;">
+						<span class="avg">Avg. monthly expense</span>
+						<span class="amt">₹{{ finalamt[1] }}</span>
+					</div>
+					<div style="clear: both;"></div>
+					<hr>
+					<span class="avg">Net cash flow</span>
+					{% if finalamt[2] >= 0 %}
+					<span class="amt" style="color: green;">₹{{ finalamt[2] }}</span>
+					{% else %}
+					<span class="amt" style="color: red;">₹{{ finalamt[2] }}</span>
+					{% endif %}
+					<div style="clear: both;"></div>
+					<br>
+					{% if finalamt[2] >= 0 %}
+					<p style="font-size: 20px;color: green;">Great !! Happy to say that you are spending and enjoying and that also being in your limits.HAPPY SAVING</p>
+					{% else %}
+					<p style="font-size: 20px;color: red;">Ooops !! Sorry to say that but you are spending more on an average than your earnings</p>
+					{% endif %}
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<footer>
@@ -118,7 +176,9 @@
 		    					<option hidden selected>Choose</option>
 		    				{% for i in expdata %}
 		    					{% for j in expdata[i] %}
-		    					<option class= "{{ i.lower() }} exp" value="{{ j[0] }}">{{ j[0] }}</option>
+		    						{% if j[0]!='Total' %}
+		    						<option class= "{{ i.lower() }} exp" value="{{ j[0] }}">{{ j[0] }}</option>
+		    						{% endif %}
 		    					{% endfor %}
 		    				{% endfor %}
 		    				</select>
@@ -144,148 +204,134 @@
 	  	</div>
 	</div>
 
+	<!-- <div>{{ incdata }}</div> -->
+
 	<script src="{{ url_for('static', filename='js/jquery-3.3.1.slim.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/Chart.min.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 	<script>
-		var ctx = document.getElementById("myChart");
-		var myChart = new Chart(ctx, {
+		var barchart = document.getElementById("barChart");
+		var myChart = new Chart(barChart, {
 		    type: 'bar',
 		    data: {
-		        labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+		        labels: {{ months|safe }},
 		        datasets: [{
-		            label: '# of Votes',
-		            data: [12, 19, 3, 5, 2, 3],
-		            backgroundColor: [
-		                'rgba(255, 99, 132, 0.2)',
-		                'rgba(54, 162, 235, 0.2)',
-		                'rgba(255, 206, 86, 0.2)',
-		                'rgba(75, 192, 192, 0.2)',
-		                'rgba(153, 102, 255, 0.2)',
-		                'rgba(255, 159, 64, 0.2)'
-		            ],
-		            borderColor: [
-		                'rgba(255,99,132,1)',
-		                'rgba(54, 162, 235, 1)',
-		                'rgba(255, 206, 86, 1)',
-		                'rgba(75, 192, 192, 1)',
-		                'rgba(153, 102, 255, 1)',
-		                'rgba(255, 159, 64, 1)'
-		            ],
+		            label: 'Income',
+		            stack: 'Stack 0',
+		            data: {{ chtdata['Income']|safe }},
+		            backgroundColor: 'rgba(60, 180, 75, 0.5)',
+		            borderColor: 'rgba(60, 180, 75,1)',
 		            borderWidth: 1
 		        },{
-		            label: '# of Votes',
-		            data: [12, 19, 3, 5, 2, 3],
-		            backgroundColor: [
-		                'rgba(255, 99, 132, 0.2)',
-		                'rgba(54, 162, 235, 0.2)',
-		                'rgba(255, 206, 86, 0.2)',
-		                'rgba(75, 192, 192, 0.2)',
-		                'rgba(153, 102, 255, 0.2)',
-		                'rgba(255, 159, 64, 0.2)'
-		            ],
-		            borderColor: [
-		                'rgba(255,99,132,1)',
-		                'rgba(54, 162, 235, 1)',
-		                'rgba(255, 206, 86, 1)',
-		                'rgba(75, 192, 192, 1)',
-		                'rgba(153, 102, 255, 1)',
-		                'rgba(255, 159, 64, 1)'
-		            ],
+		            label: 'Savings',
+		            stack: 'Stack 1',
+		            data: {{ chtdata['Savings']|safe }},
+		            backgroundColor: 'rgba(230, 25, 75, 0.5)',
+		            borderColor: 'rgba(230, 25, 75,1)',
 		            borderWidth: 1
 		        },{
-		            label: '# of Votes',
-		            data: [12, 19, 3, 5, 2, 3],
-		            backgroundColor: [
-		                'rgba(255, 99, 132, 0.2)',
-		                'rgba(54, 162, 235, 0.2)',
-		                'rgba(255, 206, 86, 0.2)',
-		                'rgba(75, 192, 192, 0.2)',
-		                'rgba(153, 102, 255, 0.2)',
-		                'rgba(255, 159, 64, 0.2)'
-		            ],
-		            borderColor: [
-		                'rgba(255,99,132,1)',
-		                'rgba(54, 162, 235, 1)',
-		                'rgba(255, 206, 86, 1)',
-		                'rgba(75, 192, 192, 1)',
-		                'rgba(153, 102, 255, 1)',
-		                'rgba(255, 159, 64, 1)'
-		            ],
+		            label: 'Home',
+		            stack: 'Stack 1',
+		            data: {{ chtdata['Home']|safe }},
+		            backgroundColor: 'rgba(255, 225, 25, 0.5)',
+		            borderColor: 'rgba(255, 225, 25, 1)',
 		            borderWidth: 1
 		        },{
-		            label: '# of Votes',
-		            data: [12, 19, 3, 5, 2, 3],
-		            backgroundColor: [
-		                'rgba(255, 99, 132, 0.2)',
-		                'rgba(54, 162, 235, 0.2)',
-		                'rgba(255, 206, 86, 0.2)',
-		                'rgba(75, 192, 192, 0.2)',
-		                'rgba(153, 102, 255, 0.2)',
-		                'rgba(255, 159, 64, 0.2)'
-		            ],
-		            borderColor: [
-		                'rgba(255,99,132,1)',
-		                'rgba(54, 162, 235, 1)',
-		                'rgba(255, 206, 86, 1)',
-		                'rgba(75, 192, 192, 1)',
-		                'rgba(153, 102, 255, 1)',
-		                'rgba(255, 159, 64, 1)'
-		            ],
+		            label: 'Health',
+		            stack: 'Stack 1',
+		            data: {{ chtdata['Health']|safe }},
+		            backgroundColor: 'rgba(0, 130, 200, 0.5)',
+		            borderColor: 'rgba(0, 130, 200, 1)',
 		            borderWidth: 1
 		        },{
-		            label: '# of Votes',
-		            data: [12, 19, 3, 5, 2, 3],
-		            backgroundColor: [
-		                'rgba(255, 99, 132, 0.2)',
-		                'rgba(54, 162, 235, 0.2)',
-		                'rgba(255, 206, 86, 0.2)',
-		                'rgba(75, 192, 192, 0.2)',
-		                'rgba(153, 102, 255, 0.2)',
-		                'rgba(255, 159, 64, 0.2)'
-		            ],
-		            borderColor: [
-		                'rgba(255,99,132,1)',
-		                'rgba(54, 162, 235, 1)',
-		                'rgba(255, 206, 86, 1)',
-		                'rgba(75, 192, 192, 1)',
-		                'rgba(153, 102, 255, 1)',
-		                'rgba(255, 159, 64, 1)'
-		            ],
+		            label: 'Transportation',
+		            stack: 'Stack 1',
+		            data: {{ chtdata['Transportation']|safe }},
+		            backgroundColor: 'rgba(240, 50, 230, 0.5)',
+		            borderColor: 'rgba(240, 50, 230, 1)',
 		            borderWidth: 1
 		        },{
-		            label: '# of Votes',
-		            data: [12, 19, 3, 5, 2, 3],
-		            backgroundColor: [
-		                'rgba(255, 99, 132, 0.2)',
-		                'rgba(54, 162, 235, 0.2)',
-		                'rgba(255, 206, 86, 0.2)',
-		                'rgba(75, 192, 192, 0.2)',
-		                'rgba(153, 102, 255, 0.2)',
-		                'rgba(255, 159, 64, 0.2)'
-		            ],
-		            borderColor: [
-		                'rgba(255,99,132,1)',
-		                'rgba(54, 162, 235, 1)',
-		                'rgba(255, 206, 86, 1)',
-		                'rgba(75, 192, 192, 1)',
-		                'rgba(153, 102, 255, 1)',
-		                'rgba(255, 159, 64, 1)'
-		            ],
+		            label: 'Entertainment',
+		            stack: 'Stack 1',
+		            data: {{ chtdata['Entertainment']|safe }},
+		            backgroundColor: 'rgba(0, 128, 128, 0.5)',
+		            borderColor: 'rgba(0, 128, 128, 1)',
+		            borderWidth: 1
+		        },{
+		            label: 'Daily-living',
+		            stack: 'Stack 1',
+		            data: {{ chtdata['Daily-living']|safe }},
+		            backgroundColor: 'rgba(128, 0, 0, 0.5)',
+		            borderColor: 'rgba(128, 0, 0,1)',
 		            borderWidth: 1
 		        }]
 		    },
 		    options: {
 		        scales: {
 		            yAxes: [{
+		                scaleLabel: {
+					        display: true,
+					        labelString: 'Price'
+					    },
 		                ticks: {
-		                    beginAtZero:true
+		                    beginAtZero:true,
+		                    callback: function(value, index, values) {
+                        		return '₹' + value;
+                    		}
 		                }
+		            }],
+		            xAxes: [{
+		            	scaleLabel: {
+					        display: true,
+					        labelString: 'Month'
+					    }
 		            }]
-		        }
+		        },
+		        title: {
+		    		display: true,
+		    		text: 'Summary',
+		    		fontSize: 20
+		    	}
 		    }
 		});
+
+		var pieChart = document.getElementById("pieChart");
+		var myDoughnutChart = new Chart(pieChart, {
+		    type: 'doughnut',
+		    data: {
+			    datasets: [{
+			        data: {{ piedata|safe }},
+			        backgroundColor: ['rgba(60, 180, 75, 0.6)',
+									  'rgba(230, 25, 75, 0.6)',
+									  'rgba(255, 225, 25, 0.6)',
+									  'rgba(0, 130, 200, 0.6)',
+									  'rgba(240, 50, 230, 0.6)',
+									  'rgba(0, 128, 128, 0.6)',
+									  'rgba(128, 0, 0, 0.6)']
+			    }],
+
+			    // These labels appear in the legend and in the tooltips when hovering different arcs
+			    labels: [
+			        'Income',
+			        'Savings',
+			        'Home',
+			        'Health',
+			        'Transportation',
+			        'Entertainment',
+			        'Daily-living'
+			    ]
+			},
+		    options: {
+		    	title: {
+		    		display: true,
+		    		text: 'Monthly Average',
+		    		fontSize: 20
+		    	}
+		    }
+		});
+
 	</script>
 </body>
 </html>
+

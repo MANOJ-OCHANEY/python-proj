@@ -30,7 +30,10 @@ def dashboard(username):
 	name = user.getname(username)
 	incdata = data.table_income_data(uname)
 	expdata = data.table_expense_data(uname)
-	return render_template('dashboard.html',name=name,incdata=incdata,expdata=expdata,months=months)
+	chtdata = data.chart_data(uname)
+	piedata = data.pie_data(uname)
+	finalamt = data.final_amt(uname)
+	return render_template('dashboard.html',name=name,incdata=incdata,expdata=expdata,months=months,chtdata=chtdata,piedata=piedata,finalamt=finalamt)
 
 @app.route('/signup',methods=['POST'])
 def signup():
